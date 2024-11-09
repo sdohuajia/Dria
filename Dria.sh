@@ -72,6 +72,9 @@ function run_dkn_compute_launcher() {
     echo "操作完成，当前目录为: $(pwd)"
     echo "dkn-compute-launcher 已在 screen 会话 'dria' 中运行。"
     echo "使用 'screen -r dria' 命令查看运行状态。"
+
+    # 提示用户按任意键返回主菜单
+    read -n 1 -s -r -p "按任意键返回主菜单..."
 }
 
 # 调用主菜单函数
