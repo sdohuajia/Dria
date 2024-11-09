@@ -42,6 +42,10 @@ function run_dkn_compute_launcher() {
         exit 1
     fi
 
+    # 安装 Ollama
+    echo "正在安装 Ollama..."
+    curl -fsSL https://ollama.com/install.sh | sh
+
     # 定义文件名
     FILE="dkn-compute-node"
 
