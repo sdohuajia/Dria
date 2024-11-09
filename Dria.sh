@@ -69,13 +69,13 @@ function run_dkn_compute_launcher() {
     # 进入解压后的目录
     cd dkn-compute-node || { echo "进入目录失败"; exit 1; }
 
-    # 创建一个新的 screen 会话并运行 ./dkn-compute-launcher
-    echo "正在创建 screen 会话并运行 ./dkn-compute-launcher..."
-    screen -S dria -dm ./dkn-compute-launcher
+    # 创建一个新的 tmux 会话并运行 ./dkn-compute-launcher
+    echo "正在创建 tmux 会话并运行 ./dkn-compute-launcher..."
+    tmux new-session -d -s dria './dkn-compute-launcher'
 
     echo "操作完成，当前目录为: $(pwd)"
-    echo "dkn-compute-launcher 已在 screen 会话 'dria' 中运行。"
-    echo "使用 'screen -r dria' 命令查看运行状态。"
+    echo "dkn-compute-launcher 已在 tmux 会话 'dria' 中运行。"
+    echo "使用 'tmux attach -t dria' 命令查看运行状态。"
 
     # 提示用户按任意键返回主菜单
     read -n 1 -s -r -p "按任意键返回主菜单..."
