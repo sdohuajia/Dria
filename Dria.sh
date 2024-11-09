@@ -42,9 +42,14 @@ function run_dkn_compute_launcher() {
         exit 1
     fi
 
-    # 安装 Ollama
+    # 检查 Ollama 是否已安装
+    if command -v ollama &> /dev/null; then
+    echo "Ollama 已安装。"
+    else
     echo "正在安装 Ollama..."
     curl -fsSL https://ollama.com/install.sh | sh
+    echo "Ollama 安装完成。"
+    fi
 
     # 定义文件名
     FILE="dkn-compute-node"
