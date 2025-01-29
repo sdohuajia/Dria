@@ -42,13 +42,26 @@ function run_dkn_compute_launcher() {
         exit 1
     fi
 
+    # 检查是否安装了 Node.js 和 pm2
+    if ! command -v pm2 &> /dev/null; then
+        echo "pm2 未安装，正在安装 pm2..."
+        npm install -g pm2
+        if [ $? -ne 0 ]; then
+            echo "pm2 安装失败，请检查您的 Node.js 环境。"
+            exit 1
+        fi
+        echo "pm2 安装完成。"
+    else
+        echo "pm2 已安装。"
+    fi
+
     # 检查 Ollama 是否已安装
     if command -v ollama &> /dev/null; then
-    echo "Ollama 已安装。"
+        echo "Ollama 已安装。"
     else
-    echo "正在安装 Ollama..."
-    curl -fsSL https://ollama.com/install.sh | sh
-    echo "Ollama 安装完成。"
+        echo "正在安装 Ollama..."
+        curl -fsSL https://ollama.com/install.sh | sh
+        echo "Ollama 安装完成。"
     fi
 
     # 定义文件名
@@ -74,13 +87,13 @@ function run_dkn_compute_launcher() {
     # 进入解压后的目录
     cd dkn-compute-node || { echo "进入目录失败"; exit 1; }
 
-    # 创建一个新的 screen 会话并运行 ./dkn-compute-launcher
-    echo "正在创建 screen 会话并运行 ./dkn-compute-launcher..."
-    screen -dmS dria ./dkn-compute-launcher
+    # 使用 pm2 启动 dkn-compute-launcher
+    echo "正在使用 pm2 启动 dkn-compute-launcher..."
+    pm2 start ./dkn-compute-launcher --name dria
 
     echo "操作完成，当前目录为: $(pwd)"
-    echo "dkn-compute-launcher 已在 screen 会话 'dria' 中运行。"
-    echo "使用 'screen -r dria' 命令查看运行状态。"
+    echo "dkn-compute-launcher 已使用 pm2 启动，进程名为 'dria'。"
+    echo "使用 'pm2 list' 查看运行状态，使用 'pm2 logs dria' 查看日志。"
 
     # 提示用户按任意键返回主菜单
     read -n 1 -s -r -p "按任意键返回主菜单..."
