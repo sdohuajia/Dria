@@ -66,7 +66,7 @@ function deploy_dria_node() {
     read port
     port=${port:-"4090"}
 
-    echo "请输入 Gemini API 密钥 (可选，留空跳过):"
+    echo "请输入 Gemini API 密钥 (必填，留空跳过):"
     read -s GEMINI_API_KEY
 
     # 创建必要目录
